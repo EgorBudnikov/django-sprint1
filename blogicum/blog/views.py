@@ -2,7 +2,9 @@ from django.shortcuts import render
 
 from django.http import Http404
 
-posts = [
+from typing import Union, List, Dict
+
+posts: List[Dict[str, Union[int, str]]] = [
     {
         'id': 0,
         'location': 'Остров отчаянья',
@@ -45,9 +47,14 @@ posts = [
     },
 ]
 
+post_dict: Dict[int, Dict[str, Union[str, int]]] = {
+    post['id']: post for post in posts
+}
+
 
 def index(request):
-    sorted_posts = sorted(posts, key=lambda x: x['id'], reverse=True)
+    sorted_posts = sorted(post_dict.values(),
+                          key=lambda x: x['id'], reverse=True)
     context = {
         'post': sorted_posts,
     }
@@ -55,11 +62,12 @@ def index(request):
 
 
 def post_detail(request, post_id):
-    if not -1 < post_id < 4:
-        raise Http404('Такой страницы не существует') 
-    context = {
-        'post': posts[post_id],
-    }
+    try:
+        context = {
+            'post': post_dict[post_id],
+        }
+    except KeyError:
+        raise Http404('Такой страницы не существует')
     return render(request, 'blog/detail.html', context)
 
 
