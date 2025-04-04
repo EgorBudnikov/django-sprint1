@@ -52,9 +52,9 @@ def index(request):
     return render(request, 'blog/index.html', context)
 
 
-def post_detail(request, id):
+def post_detail(request, post_id):
     context = {
-        'post': posts[id],
+        'post': posts[post_id],
     }
     return render(request, 'blog/detail.html', context)
 
