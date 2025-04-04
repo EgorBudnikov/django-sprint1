@@ -7,17 +7,7 @@
 {% for pos in post %}
   <hr>
   <article>
-    <ul>
-      <li>
-        Место: {{ pos.location }}             
-      </li>
-      <li>
-        Дата: {{ pos.date }}
-      </li>
-      <li>
-        Категория: <a href="not-my-day">not-my-day</a>
-      </li>
-    </ul>          
+    {% include 'includes/posts.html' with location=pos.location date=pos.date %}         
     <p>
       {{  pos.text|truncatewords:10  }}
     </p>
