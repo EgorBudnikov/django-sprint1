@@ -1,5 +1,7 @@
 from django.shortcuts import render
 
+from django.http import Http404
+
 posts = [
     {
         'id': 0,
@@ -53,6 +55,8 @@ def index(request):
 
 
 def post_detail(request, post_id):
+    if not -1 < post_id < 4:
+        raise Http404('Такой страницы не существует') 
     context = {
         'post': posts[post_id],
     }
