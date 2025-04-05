@@ -1,8 +1,8 @@
-from django.shortcuts import render
+from typing import Union, List, Dict
 
 from django.http import Http404
+from django.shortcuts import render
 
-from typing import Union, List, Dict
 
 posts: List[Dict[str, Union[int, str]]] = [
     {
@@ -53,7 +53,7 @@ post_dict: Dict[int, Dict[str, Union[str, int]]] = {
 
 
 def index(request):
-    sorted_posts = sorted(post_dict.values(),
+    sorted_posts = sorted(posts,
                           key=lambda x: x['id'], reverse=True)
     context = {
         'post': sorted_posts,
